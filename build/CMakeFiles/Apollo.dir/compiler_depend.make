@@ -40,89 +40,149 @@ Apollo: /usr/lib/Scrt1.o \
 
 CMakeFiles/Apollo.dir/src/main.c.o: /home/Hazel/Desktop/programs/current/apollo/src/main.c \
   /home/Hazel/Desktop/programs/current/apollo/external/raylib/src/raylib.h \
+  /usr/include/bits/floatn-common.h \
+  /usr/include/bits/floatn.h \
+  /usr/include/bits/flt-eval-method.h \
+  /usr/include/bits/fp-fast.h \
+  /usr/include/bits/fp-logb.h \
+  /usr/include/bits/libc-header-start.h \
+  /usr/include/bits/libm-simd-decl-stubs.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/bits/math-vector.h \
+  /usr/include/bits/mathcalls-helper-functions.h \
+  /usr/include/bits/mathcalls-macros.h \
+  /usr/include/bits/mathcalls.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/gnu/stubs-64.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/math.h \
   /usr/include/stdc-predef.h \
+  /usr/include/sys/cdefs.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdbool.h
 
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h:
-
-/usr/include/stdc-predef.h:
-
-external/raylib/raylib/libraylib.a:
-
-CMakeFiles/Apollo.dir/src/main.c.o:
-
-/usr/lib/libxcb.so.1:
-
-/usr/lib/libuuid.so.1:
-
-/usr/lib/libstdc++.so.6:
-
-/usr/lib/libmvec.so.1:
-
-/usr/lib/crtn.o:
-
-/usr/lib/libc.so.6:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a:
-
-/usr/lib/libc_nonshared.a:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdbool.h:
 
-/usr/lib/libpthread.a:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so:
-
-/usr/lib/libm.so:
-
-/home/Hazel/Desktop/programs/current/apollo/external/raylib/src/raylib.h:
-
-/usr/lib/libgcc_s.so.1:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o:
-
-/usr/lib/libdl.a:
-
-/usr/lib/libX11.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so:
-
-/usr/lib/libGLX.so:
-
-/usr/lib/libc.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o:
-
-/usr/lib/Scrt1.o:
-
-/home/Hazel/Desktop/programs/current/apollo/src/main.c:
-
-/usr/lib/libXdmcp.so.6:
-
-/usr/lib/crti.o:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s.so:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s_asneeded.so:
-
-/usr/lib/libGLdispatch.so.0:
-
-/usr/lib/librt.a:
-
-/usr/lib/libGLU.so:
-
-/usr/lib/libICE.so:
-
-/usr/lib/libXext.so:
-
-/usr/lib/libOpenGL.so:
-
-/usr/lib/libSM.so:
-
-/usr/lib/libXau.so.6:
+/usr/lib/libm.so.6:
 
 /usr/lib/ld-linux-x86-64.so.2:
 
-/usr/lib/libm.so.6:
+/usr/lib/libXau.so.6:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/lib/libGLU.so:
+
+/usr/include/features-time64.h:
+
+/usr/lib/libGLdispatch.so.0:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s.so:
+
+/usr/lib/crti.o:
+
+/usr/include/bits/mathcalls-helper-functions.h:
+
+/usr/lib/libXdmcp.so.6:
+
+/home/Hazel/Desktop/programs/current/apollo/src/main.c:
+
+/usr/include/bits/floatn-common.h:
+
+/usr/lib/Scrt1.o:
+
+/usr/lib/libGLX.so:
+
+/usr/lib/librt.a:
+
+/usr/lib/libX11.so:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o:
+
+/usr/include/bits/mathcalls-macros.h:
+
+/usr/lib/libgcc_s.so.1:
+
+/home/Hazel/Desktop/programs/current/apollo/external/raylib/src/raylib.h:
+
+/usr/lib/libm.so:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so:
+
+/usr/lib/libSM.so:
+
+/usr/lib/libdl.a:
+
+/usr/lib/libpthread.a:
+
+/usr/lib/libc_nonshared.a:
+
+/usr/lib/libICE.so:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a:
+
+/usr/lib/libc.so.6:
+
+/usr/lib/libOpenGL.so:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so:
+
+/usr/lib/crtn.o:
+
+/usr/lib/libc.so:
+
+/usr/include/bits/fp-fast.h:
+
+/usr/lib/libmvec.so.1:
+
+/usr/lib/libstdc++.so.6:
+
+/usr/lib/libxcb.so.1:
+
+CMakeFiles/Apollo.dir/src/main.c.o:
+
+external/raylib/raylib/libraylib.a:
+
+/usr/include/bits/floatn.h:
+
+/usr/include/bits/flt-eval-method.h:
+
+/usr/include/bits/fp-logb.h:
+
+/usr/lib/libuuid.so.1:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s_asneeded.so:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o:
+
+/usr/include/bits/libm-simd-decl-stubs.h:
+
+/usr/include/bits/math-vector.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/timesize.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/lib/libXext.so:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/features.h:
+
+/usr/include/math.h:
+
+/usr/include/gnu/stubs.h:
