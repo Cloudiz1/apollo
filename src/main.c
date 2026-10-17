@@ -91,7 +91,7 @@ int main(void)
 		BeginMode2D(state.camera);
 		
 		for (int i = 0; i < 100; i++) {
-			DrawRectangle(i * 150, i * 150, 100, 100, BLUE);
+			DrawRectangle(0, i * 150, 100, 100, BLUE);
 		}
 
 		EndMode2D();
