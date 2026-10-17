@@ -52,7 +52,18 @@ CMakeFiles/Apollo.dir/src/main.c.o: /home/Hazel/Desktop/programs/current/apollo/
   /usr/include/bits/mathcalls-helper-functions.h \
   /usr/include/bits/mathcalls-macros.h \
   /usr/include/bits/mathcalls.h \
+  /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
+  /usr/include/bits/types.h \
+  /usr/include/bits/types/FILE.h \
+  /usr/include/bits/types/__FILE.h \
+  /usr/include/bits/types/__fpos64_t.h \
+  /usr/include/bits/types/__fpos_t.h \
+  /usr/include/bits/types/__mbstate_t.h \
+  /usr/include/bits/types/cookie_io_functions_t.h \
+  /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/typesizes.h \
   /usr/include/bits/wordsize.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
@@ -60,14 +71,38 @@ CMakeFiles/Apollo.dir/src/main.c.o: /home/Hazel/Desktop/programs/current/apollo/
   /usr/include/gnu/stubs.h \
   /usr/include/math.h \
   /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
   /usr/include/sys/cdefs.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdbool.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdbool.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h
 
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdbool.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/stdio.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/math.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/features.h:
+
+/usr/include/features-time64.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/bits/types/struct_FILE.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
 
 /usr/lib/libm.so.6:
 
@@ -75,11 +110,13 @@ CMakeFiles/Apollo.dir/src/main.c.o: /home/Hazel/Desktop/programs/current/apollo/
 
 /usr/lib/libXau.so.6:
 
-/usr/include/gnu/stubs-64.h:
+/usr/include/bits/wordsize.h:
+
+/usr/lib/libXext.so:
 
 /usr/lib/libGLU.so:
 
-/usr/include/features-time64.h:
+/usr/include/bits/types/__fpos64_t.h:
 
 /usr/lib/libGLdispatch.so.0:
 
@@ -96,6 +133,10 @@ CMakeFiles/Apollo.dir/src/main.c.o: /home/Hazel/Desktop/programs/current/apollo/
 /usr/include/bits/floatn-common.h:
 
 /usr/lib/Scrt1.o:
+
+/usr/include/bits/types/FILE.h:
+
+/usr/include/bits/types/__FILE.h:
 
 /usr/lib/libGLX.so:
 
@@ -120,8 +161,6 @@ CMakeFiles/Apollo.dir/src/main.c.o: /home/Hazel/Desktop/programs/current/apollo/
 /usr/lib/libdl.a:
 
 /usr/lib/libpthread.a:
-
-/usr/lib/libc_nonshared.a:
 
 /usr/lib/libICE.so:
 
@@ -167,22 +206,22 @@ external/raylib/raylib/libraylib.a:
 
 /usr/include/bits/libm-simd-decl-stubs.h:
 
-/usr/include/bits/math-vector.h:
-
 /usr/include/bits/mathcalls.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/time64.h:
 
 /usr/include/bits/timesize.h:
 
-/usr/include/stdc-predef.h:
+/usr/lib/libc_nonshared.a:
 
-/usr/include/sys/cdefs.h:
+/usr/include/bits/types.h:
 
-/usr/lib/libXext.so:
+/usr/include/bits/math-vector.h:
 
-/usr/include/bits/wordsize.h:
+/usr/include/bits/types/__fpos_t.h:
 
-/usr/include/features.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h:
 
-/usr/include/math.h:
-
-/usr/include/gnu/stubs.h:
+/usr/include/bits/types/__mbstate_t.h:
