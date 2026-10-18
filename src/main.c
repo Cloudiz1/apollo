@@ -1,4 +1,6 @@
 #include "raylib.h"
+#include "hcl_arena.h"
+
 #include <stdio.h>
 #include <math.h>
 
