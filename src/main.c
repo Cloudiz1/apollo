@@ -8,16 +8,30 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450 
 
-hcl_define_da_alias(Rectangle, rect);
 
 typedef struct {
-	Camera2D camera;
-	Vector2 mouse_original;
+	Rectangle rect;
+	Color color;
+	// TODO: any metadata regarding a set
+} Set;
+
+hcl_define_da_alias(Set, set);
+hcl_define_da(int);
+
+typedef struct {
 	hcl_arena *arena;
-	hcl_da_rect *selected;
-	hcl_da_rect *squares;
+	hcl_arena *frame_arena;
+
+	Camera2D camera;
 	bool dragging;
+
+	Vector2 mouse_original;
+	hcl_da_set *sets;
+	hcl_da_int *selected;
+	Rectangle selection;
 	bool selecting;
+	bool selection_updated;
+
 } State;
 
 State init_state() {
@@ -30,16 +44,23 @@ State init_state() {
     camera.zoom = 0.5f;
 
 	hcl_arena *arena = hcl_arena_new(1024 * 1024 * 1024);
-	hcl_da_rect *selected = hcl_da_rect_init(arena);
-	hcl_da_rect *squares = hcl_da_rect_init(arena);
+	hcl_arena *frame_arena = hcl_arena_new(1024 * 1024 * 1024);
+
+	hcl_da_set *squares = hcl_da_set_init(arena);
+	hcl_da_int *selected = hcl_da_int_init(arena);
+	Rectangle selection = { 0 };
 
 	return (State){
-		.camera = camera,
-		.mouse_original = { 0 },
 		.arena = arena,
-		.selected = selected,
-		.squares = squares,
+		.frame_arena = frame_arena,
+
+		.camera = camera,
 		.dragging = false,
+
+		.mouse_original = { 0 },
+		.sets = squares,
+		.selected = selected,
+		.selection = selection,
 		.selecting = false,
 	};
 }
@@ -50,6 +71,7 @@ void handle_camera(State *state) {
 	}
 
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+		printf("released: from camera");
 		state->dragging = false;
 	}
 
@@ -63,16 +85,20 @@ void handle_camera(State *state) {
 	// zoom
 	float zoom = expf(logf(state->camera.zoom) + ((float)GetMouseWheelMove()*0.1f));
 	state->camera.zoom = fmax(0.05, fmin(zoom, 5));
+}
 
+void selection(State *state) {
 	if (IsKeyPressed(KEY_LEFT_SHIFT)) {
 		state->selecting = true;
 	}
-}
 
-// TODO: maybe make this return the selected squares too?
-void draw_selection(State *state) {
 	if (IsKeyReleased(KEY_LEFT_SHIFT) && !IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
 		state->selecting = false;
+	}
+
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+		printf("released!");
+		state->selection_updated = false;
 	}
 
 	if (state->selecting && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -80,17 +106,36 @@ void draw_selection(State *state) {
 	}
 
 	if (state->selecting && state->dragging && IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-		float x = state->mouse_original.x;
-		float y = state->mouse_original.y;
+		float ox = state->mouse_original.x;
+		float oy = state->mouse_original.y;
 		float width = -(state->mouse_original.x - GetMouseX());
 		float height = -(state->mouse_original.y - GetMouseY());
-		DrawRectangle(x, y, width, height, BLACK);
+		Rectangle rec = (Rectangle) {
+			.x = ox,
+			.y = oy,
+			.width = width,
+			.height = height,
+		};
+
+		state->selection = rec;
+		DrawRectangleRec(rec, BLACK);
+	}
+}
+
+void update_selection(State *state) {
+	for (int i = 0; i < state->sets->length; i++) {
+		if (CheckCollisionRecs(state->sets->data[i].rect, state->selection)) {
+			printf("collision detected\n");
+			hcl_da_int_push(state->selected, i);
+			state->sets->data[i].color = RED;
+		}
 	}
 }
 
 void draw_rectangles(State *state) {
-	for (int i = 0; i < state->squares->length; i++) {
-		DrawRectangleRec(state->squares->data[i], BLUE);
+	for (int i = 0; i < state->sets->length; i++) {
+		Set set = state->sets->data[i];
+		DrawRectangleRec(set.rect, set.color);
 	}
 }
 
@@ -110,13 +155,25 @@ int main(void)
 			.height = 100,
 		};
 
-		hcl_da_rect_push(state.squares, rect);
+		Set set = (Set) {
+			.rect = rect,
+			.color = BLUE,
+		};
+
+		hcl_da_set_push(state.sets, set);
 	}
 
     while (!WindowShouldClose())
 	{
+		hcl_arena_clear(state.frame_arena);
+
 		handle_camera(&state);
-		draw_selection(&state);
+		selection(&state);
+
+		if (!state.selection_updated) {
+			update_selection(&state);
+			state.selection_updated = true;
+		}
 
 		BeginDrawing();
 
