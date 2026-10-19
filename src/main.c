@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "hcl_arena.h"
+#include "hcl_da.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -7,9 +8,14 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450 
 
+hcl_define_da_alias(Rectangle, rect);
+
 typedef struct {
 	Camera2D camera;
 	Vector2 mouse_original;
+	hcl_arena *arena;
+	hcl_da_rect *selected;
+	hcl_da_rect *squares;
 	bool dragging;
 	bool selecting;
 } State;
@@ -23,9 +29,18 @@ State init_state() {
     camera.rotation = 0.0f;
     camera.zoom = 0.5f;
 
+	hcl_arena *arena = hcl_arena_new(1024 * 1024 * 1024);
+	hcl_da_rect *selected = hcl_da_rect_init(arena);
+	hcl_da_rect *squares = hcl_da_rect_init(arena);
+
 	return (State){
 		.camera = camera,
-		.dragging = false
+		.mouse_original = { 0 },
+		.arena = arena,
+		.selected = selected,
+		.squares = squares,
+		.dragging = false,
+		.selecting = false,
 	};
 }
 
@@ -73,6 +88,12 @@ void draw_selection(State *state) {
 	}
 }
 
+void draw_rectangles(State *state) {
+	for (int i = 0; i < state->squares->length; i++) {
+		DrawRectangleRec(state->squares->data[i], BLUE);
+	}
+}
+
 int main(void)
 {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -80,6 +101,17 @@ int main(void)
 
 	State state = init_state();
     SetTargetFPS(60);
+
+	for (int i = 0; i < 100; i++) {
+		Rectangle rect = (Rectangle) {
+			.x = 0,
+			.y = 150 * i,
+			.width = 100,
+			.height = 100,
+		};
+
+		hcl_da_rect_push(state.squares, rect);
+	}
 
     while (!WindowShouldClose())
 	{
@@ -91,10 +123,8 @@ int main(void)
 		ClearBackground(RAYWHITE);
 
 		BeginMode2D(state.camera);
-		
-		for (int i = 0; i < 100; i++) {
-			DrawRectangle(0, i * 150, 100, 100, BLUE);
-		}
+
+		draw_rectangles(&state);
 
 		EndMode2D();
 
