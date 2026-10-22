@@ -8,14 +8,20 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450 
 
-
 typedef struct {
 	Rectangle rect;
 	Color color;
 	// TODO: any metadata regarding a set
 } Set;
 
+// TODO: eventually add a thickness and a color to this, so highlighting looks cooler!
+typedef struct {
+	Vector2 start;
+	Vector2 end;
+} Line;
+
 hcl_define_da_alias(Set, set);
+hcl_define_da_alias(Line, line);
 hcl_define_da(int);
 
 typedef struct {
@@ -38,6 +44,8 @@ typedef struct {
 	bool selecting;
 	bool selection_updated;
 
+	hcl_da_line *lines;
+
 	Mouse mouse;
 } State;
 
@@ -55,6 +63,7 @@ State init_state() {
 
 	hcl_da_set *squares = hcl_da_set_init(arena);
 	hcl_da_int *selected = hcl_da_int_init(arena);
+	hcl_da_line *lines = hcl_da_line_init(arena);
 	Rectangle selection = { 0 };
 
 	return (State){
@@ -69,6 +78,8 @@ State init_state() {
 		.selected = selected,
 		.selection = selection,
 		.selecting = false,
+
+		.lines = lines,
 
 		.mouse = { 0 }
 	};
@@ -155,16 +166,40 @@ void clear_selection(State *state) {
 	hcl_da_int_clear(state->selected);
 }
 
-
 void update_selection(State *state) {
-	// TODO: this is just temporary
 	clear_selection(state);
 
+	float ytotal = 0;
 	for (int i = 0; i < state->sets->length; i++) {
-		if (CheckCollisionRecs(state->sets->data[i].rect, state->selection)) {
+	  Rectangle c = state->sets->data[i].rect;
+		if (CheckCollisionRecs(c, state->selection)) {
 			hcl_da_int_push(state->selected, i);
-			state->sets->data[i].color = RED;
+			ytotal += c.y;
 		}
+	}
+
+	Rectangle rect = (Rectangle) {
+		.x = 300,
+		.y = ytotal / state->selected->length,
+		.width = 100,
+		.height = 100,
+	};
+
+	Set set = (Set) {
+		.rect = rect,
+		.color = BLUE,
+	};
+
+	hcl_da_set_push(state->sets, set);
+
+	Vector2 end = (Vector2) { .x = rect.x, .y = rect.y + 0.5 * rect.height};
+
+	for (int i = 0; i < state->selected->length; i++) {
+		int index = state->selected->data[i];
+		Rectangle left = state->sets->data[index].rect;
+		Vector2 start = (Vector2) { .x = left.x + left.width, .y = left.y + 0.5 * left.height};
+		Line l = (Line) { start, end };
+		hcl_da_line_push(state->lines, l);
 	}
 }
 
@@ -172,6 +207,13 @@ void draw_rectangles(State *state) {
 	for (int i = 0; i < state->sets->length; i++) {
 		Set set = state->sets->data[i];
 		DrawRectangleRec(set.rect, set.color);
+	}
+}
+
+void draw_lines(State *state) {
+	for (int i = 0; i < state->lines->length; i++) {
+		Line l = state->lines->data[i];
+		DrawLineBezier(l.start, l.end, 4.0f, PURPLE);
 	}
 }
 
@@ -216,6 +258,7 @@ int main(void)
 			ClearBackground(RAYWHITE);
 			BeginMode2D(state.camera);
 				draw_rectangles(&state);
+				draw_lines(&state);
 			EndMode2D();
 		EndDrawing();
     }
