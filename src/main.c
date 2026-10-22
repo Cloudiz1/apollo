@@ -146,10 +146,22 @@ void selection(State *state) {
 	}
 }
 
+void clear_selection(State *state) {
+	for (int i = 0; i < state->selected->length; i++) {
+		int index = state->selected->data[i];
+		state->sets->data[index].color = BLUE;
+	}
+
+	hcl_da_int_clear(state->selected);
+}
+
+
 void update_selection(State *state) {
+	// TODO: this is just temporary
+	clear_selection(state);
+
 	for (int i = 0; i < state->sets->length; i++) {
 		if (CheckCollisionRecs(state->sets->data[i].rect, state->selection)) {
-			printf("collision detected\n");
 			hcl_da_int_push(state->selected, i);
 			state->sets->data[i].color = RED;
 		}
