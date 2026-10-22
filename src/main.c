@@ -19,6 +19,12 @@ hcl_define_da_alias(Set, set);
 hcl_define_da(int);
 
 typedef struct {
+	Vector2 pos;
+	bool ldown;
+	bool lpressed;
+} Mouse;
+
+typedef struct {
 	hcl_arena *arena;
 	hcl_arena *frame_arena;
 
@@ -32,6 +38,7 @@ typedef struct {
 	bool selecting;
 	bool selection_updated;
 
+	Mouse mouse;
 } State;
 
 State init_state() {
@@ -62,7 +69,15 @@ State init_state() {
 		.selected = selected,
 		.selection = selection,
 		.selecting = false,
+
+		.mouse = { 0 }
 	};
+}
+
+void update_mouse(Mouse *mouse) {
+	mouse->pos = GetMousePosition();
+	mouse->ldown = IsMouseButtonDown(MOUSE_LEFT_BUTTON);
+	mouse->lpressed = IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
 
 void handle_camera(State *state) {
@@ -71,7 +86,6 @@ void handle_camera(State *state) {
 	}
 
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-		printf("released: from camera");
 		state->dragging = false;
 	}
 
@@ -97,7 +111,6 @@ void selection(State *state) {
 	}
 
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-		printf("released!");
 		state->selection_updated = false;
 	}
 
@@ -106,19 +119,30 @@ void selection(State *state) {
 	}
 
 	if (state->selecting && state->dragging && IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-		float ox = state->mouse_original.x;
-		float oy = state->mouse_original.y;
-		float width = -(state->mouse_original.x - GetMouseX());
-		float height = -(state->mouse_original.y - GetMouseY());
-		Rectangle rec = (Rectangle) {
-			.x = ox,
-			.y = oy,
-			.width = width,
-			.height = height,
-		};
+		// TODO: lwk put mouse_oriignal into mouse
 
-		state->selection = rec;
-		DrawRectangleRec(rec, BLACK);
+		// world vars
+		Vector2 wpos = GetScreenToWorld2D(state->mouse_original, state->camera);
+		Vector2 wend = GetScreenToWorld2D(state->mouse.pos, state->camera);
+
+		float wx = fminf(wpos.x, wend.x);
+		float wy = fminf(wpos.y, wend.y);
+		float ww = fabsf(wpos.x - wend.x);
+		float wh = fabsf(wpos.y - wend.y);
+
+		// selection box in world coords to find what user selected
+		state->selection = (Rectangle) { wx, wy, ww, wh };
+
+		// screen cords; draw box
+		Vector2 spos = state->mouse_original;
+		Vector2 send = state->mouse.pos;
+
+		float sx = fminf(spos.x, send.x);
+		float sy = fminf(spos.y, send.y);
+		float sw = fabsf(spos.x - send.x);
+		float sh = fabsf(spos.y - send.y);
+
+		DrawRectangle(sx, sy, sw, sh, BLACK);
 	}
 }
 
@@ -166,6 +190,7 @@ int main(void)
     while (!WindowShouldClose())
 	{
 		hcl_arena_clear(state.frame_arena);
+		update_mouse(&state.mouse);
 
 		handle_camera(&state);
 		selection(&state);
@@ -176,15 +201,10 @@ int main(void)
 		}
 
 		BeginDrawing();
-
-		ClearBackground(RAYWHITE);
-
-		BeginMode2D(state.camera);
-
-		draw_rectangles(&state);
-
-		EndMode2D();
-
+			ClearBackground(RAYWHITE);
+			BeginMode2D(state.camera);
+				draw_rectangles(&state);
+			EndMode2D();
 		EndDrawing();
     }
 
